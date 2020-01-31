@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://objects/Actor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Poe.gd" type="Script" id=2]
+[ext_resource path="res://assets/monster01-1.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 89.5849
+
+[node name="Poe" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+type = 3
+speed = 8
+can_be_pushed = true
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="." index="1"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+visible = false
+shape = SubResource( 1 )
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]

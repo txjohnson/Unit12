@@ -45,5 +45,5 @@ func add_child (node, legible_unique_name=false):
 func remove_child (node):
 	var grid_pos = world_to_map(node.position)
 	set_cellv(grid_pos, -1)
-	node .replace_by (Node.instance())
+	node .replace_by (Node.new())
 	node.queue_free()
