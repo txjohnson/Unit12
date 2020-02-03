@@ -15,6 +15,7 @@ export var monster_count = 10
 func _ready():
 	rng.randomize()
 	create_border()
+	place_monsters()
 	place_blocks()
 	pass # Replace with function body.
 
@@ -60,6 +61,24 @@ func place_blocks():
 		b.initial_grid_position = p
 		$Grid.add_child (b)
 		
+func place_monsters():
+	var window_size = OS.get_window_size()
+
+	var xmax = int (window_size.x / $Grid.cell_size.x)
+	var ymax = int (window_size.y / $Grid.cell_size.y)
+
+	var positions = []
+	
+	for i in range (monster_count):
+		var pos = Vector2()
+		while $Grid.get_cellv (pos) >= 0 or pos in positions:
+			pos = Vector2 (rng.randi() % xmax, rng.randi() % ymax)
+		positions .append (pos)
+		
+	for p in positions:
+		var m = poe.instance()
+		m.initial_grid_position = p
+		$Grid.add_child (m)
 
 func on_bad_end (who):
 	var bad = fx.instance()
